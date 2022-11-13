@@ -1,0 +1,6 @@
+module.exports  = {
+    UNCLASSIFIED: 'UNCLASSIFIED',
+    CONFIDENTIAL: 'CONFIDENTIAL',
+    SECRET: 'SECRET',
+    TOP_SECRET: 'TOP_SECRET'
+};

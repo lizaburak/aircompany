@@ -16,7 +16,10 @@
     "npm": ">=3.10.8"
   },
   "devDependencies": {
-    "mocha": "^6.2.0",
-    "chai": "^4.2.0"
+    "chai": "^4.2.0",
+    "mocha": "^6.2.0"
+  },
+  "dependencies": {
+    "chai-sorted": "^0.2.0"
   }
 }
