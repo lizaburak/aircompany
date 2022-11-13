@@ -1,4 +1,4 @@
-const Airport = require('./Airport');
+const Airport = require('./airport');
 
 const MilitaryPlane = require('./Planes/MilitaryPlane');
 const PassengerPlane = require('./Planes/PassengerPlane');
