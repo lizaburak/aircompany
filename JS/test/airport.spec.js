@@ -3,11 +3,11 @@ chai.use(require("chai-sorted"));
 
 const { assert, expect } = chai;
 
-const Airport = require('../Airport');
+const Airport = require('../airport/Airport');
 
-const MilitaryPlane = require('../Planes/MilitaryPlane');
-const PassengerPlane = require('../Planes/PassengerPlane');
-const ExperimentalPlane = require('../Planes/ExperimentalPlane');
+const MilitaryPlane = require('../planes/MilitaryPlane');
+const PassengerPlane = require('../planes/PassengerPlane');
+const ExperimentalPlane = require('../planes/ExperimentalPlane');
 
 const MILITARY_TYPES = require('../models/militaryTypes');
 const EXPERIMENTAL_TYPES = require('../models/experimentalTypes');
@@ -34,7 +34,7 @@ describe('Test Airport', () => {
         new ExperimentalPlane('Ryan X-13 Vertijet', 560, 307, 500, EXPERIMENTAL_TYPES.VTOL, CLASSIFICATION_LEVELS.TOP_SECRET)
       ];
 
-      const PassengerPlanes = [
+      const passengerPlanes = [
         new PassengerPlane("Boeing-737", 900, 12000, 60500, 164),
         new PassengerPlane("Boeing-737-800", 940, 12300, 63870, 192),
         new PassengerPlane("Boeing-747", 980, 16100, 70500, 242),
@@ -52,7 +52,7 @@ describe('Test Airport', () => {
         ...militaryFighterPlanes,
         ...militaryTransportPlanes,
         ...classifiedExperimentalPlanes,
-        ...PassengerPlanes,
+        ...passengerPlanes,
       ];  
 
       it('Should have military planes with transport type.', () => {
@@ -60,6 +60,27 @@ describe('Test Airport', () => {
         const filteredPlanes = airport.getTransportMilitaryPlanes();
     
         expect(filteredPlanes).to.have.members(militaryTransportPlanes);
+      });
+
+      it('Should have military planes with bomber type.', () => {
+        const airport = new Airport(planes);
+        const filteredPlanes = airport.getBomberMilitaryPlanes();
+    
+        expect(filteredPlanes).to.have.members(militaryBomberPlanes);
+      });
+
+      it('Should have military planes with fighter type.', () => {
+        const airport = new Airport(planes);
+        const filteredPlanes = airport.getFighterMilitaryPlanes();
+    
+        expect(filteredPlanes).to.have.members(militaryFighterPlanes);
+      });
+
+      it('Should have passenger planes.', () => {
+        const airport = new Airport(planes);
+        const filteredPlanes = airport.getPassengerPlanes();
+    
+        expect(filteredPlanes).to.have.members(passengerPlanes);
       });
 
       it('Should find passenger plane with max capacity.', () => {
@@ -74,7 +95,7 @@ describe('Test Airport', () => {
         airport.sortByMaxLoadCapacity();
         const planesSortedByMaxLoadCapacity = airport.planes;
 
-        expect(planesSortedByMaxLoadCapacity).to.be.ascendingBy("maxLoadCapacity");
+        expect(planesSortedByMaxLoadCapacity).to.be.ascendingBy('maxLoadCapacity');
     })
 
     it('Should check that at least one bomber is present in military planes.', () => {
@@ -90,6 +111,22 @@ describe('Test Airport', () => {
 
         expect(experimentalPlanes).to.have.members(classifiedExperimentalPlanes);
     });
+
+    it('Should sort by max distance.', () => {
+        const airport = new Airport(planes);
+        airport.sortByMaxDistance();
+        const planesSortedByMaxDistance = airport.planes;
+  
+        expect(planesSortedByMaxDistance).to.be.ascendingBy('maxFlightDistance');
+    })
+
+    it('Should sort by max speed.', () => {
+      const airport = new Airport(planes);
+      airport.sortByMaxSpeed();
+      const planesSortedByMaxSpeed = airport.planes;
+
+      expect(planesSortedByMaxSpeed).to.be.ascendingBy('maxSpeed');
+    })
 });
 
 
